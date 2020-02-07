@@ -1,9 +1,11 @@
 package org.grails.guides
 
+import grails.gorm.transactions.ReadOnly
 class HomeController {
 
+    @ReadOnly
     def index() {
-        respond([name: session.name ?: 'User', vehicleTotal: Vehicle.count()])
+        respond([name: session.name ?: 'User', vehicleList: Vehicle.list(), vehicleTotal: Vehicle.count()])
     }
 
     def updateName(String name) {
