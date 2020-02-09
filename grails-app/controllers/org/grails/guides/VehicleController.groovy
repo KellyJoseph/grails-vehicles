@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.*
 class VehicleController {
 
     VehicleService vehicleService
+    ValueEstimateService valueEstimateService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -14,8 +15,9 @@ class VehicleController {
         respond vehicleService.list(params), model:[vehicleCount: vehicleService.count()]
     }
 
-    def show(Long id) {
-        respond vehicleService.get(id)
+    def show(Vehicle vehicle) {
+        //respond vehicle
+        respond vehicle, model: [estimatedValue: valueEstimateService.getEstimate(vehicle)]
     }
 
     def create() {
